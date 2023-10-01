@@ -25,7 +25,7 @@ def criar_conta():
     }
 
     contas_bancarias.append(conta)
-    print("Conta criada com sucesso")
+    print("Conta criada com sucesso!")
 
 def verificar_senha(numero_conta):
     senha = input("Digite sua senha de 3 digitos: ")
@@ -132,3 +132,5 @@ while True:
         break
     else:
         print("Opção inválida. Tente novamente.")
+
+print(contas_bancarias)
