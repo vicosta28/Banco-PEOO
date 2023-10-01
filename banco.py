@@ -8,23 +8,46 @@ def criar_conta():
     for conta in contas_bancarias:
         if (conta["numero_conta"] == numero_conta):
             print("Essa conta já existe. Por favor escolha um numero de conta diferente.")
-            num_conta = input("Digite o número da conta: ")
+            numero_conta = input("Digite o número da conta: ")
 
     saldo_inicial = float(input("Digite o saldo inicial da conta: "))
+    senha = input("Crie uma senha de 3 digitos: ")
+
+    if len(senha)!=3:
+        print("A senha deve conter somente 3 digtos. Tente novamente.")
+        return
+
     conta = {
         "nome": nome,
         "numero_conta": numero_conta,
-        "saldo": saldo_inicial
+        "saldo": saldo_inicial,
+        "senha":senha
     }
 
     contas_bancarias.append(conta)
-    senha = int(input("Crie uma senha de 3 digitos: "))
-    print("Conta criada com sucesso!")
+    print("Conta criada com sucesso")
+
+def verificar_senha(numero_conta):
+    senha = input("Digite sua senha de 3 digitos: ")
+
+    for conta in contas_bancarias:
+        if conta["numero_conta"] == numero_conta:
+            if conta["senha"] == senha:
+                return True
+            
+            else:
+                print("Senha incorreta. Tente novamente")
+                return False
+            
+    print("Conta não encontrada")
+
+    return False
 
 def sacar():
     numero_conta = input("Digite o número da conta: ")
-    digite_senha = int(input("Digite sua senha:"))
-    valor = float(input("Digite o valor que deseja sacar: "))
+
+    if verificar_senha(numero_conta):
+        valor = float(input("Digite o valor que deseja sacar: "))
     
     for conta in contas_bancarias:
         if conta["numero_conta"] == numero_conta:
@@ -35,23 +58,25 @@ def sacar():
             else:
                 print("Saldo insuficiente para realizar o saque.")
                 return
-    print("Conta não encontrada.")
 
 def depositar():
     numero_conta = input("Digite o número da conta: ")
-    valor = float(input("Digite o valor que deseja depositar: "))
+
+    if verificar_senha(numero_conta):
+        valor = float(input("Digite o valor que deseja depositar: "))
     
     for conta in contas_bancarias:
         if conta["numero_conta"] == numero_conta:
             conta["saldo"] += valor
             print(f"Depósito de R${valor} realizado com sucesso.")
             return
-    print("Conta não encontrada.")
 
 def transferir():
     conta_origem = input("Digite o número da conta de origem: ")
     conta_destino = input("Digite o número da conta de destino: ")
-    valor = float(input("Digite o valor que deseja transferir: "))
+
+    if verificar_senha(conta_origem):
+        valor = float(input("Digite o valor que deseja transferir: "))
     
     for origem in contas_bancarias:
         if origem["numero_conta"] == conta_origem:
@@ -62,6 +87,7 @@ def transferir():
                         destino["saldo"] += valor
                         print(f"Transferência de R${valor} realizada com sucesso.")
                         return
+                    
                     else:
                         print("Saldo insuficiente para realizar a transferência.")
                         return
@@ -69,15 +95,18 @@ def transferir():
 
 def extrato_bancario():
     numero_conta = input("Digite o número da conta: ")
-    
-    for conta in contas_bancarias:
-        if conta["numero_conta"] == numero_conta:
-            print(f"Extrato bancário para a conta de {conta['nome']}:")
-            print(f"Número da conta: {conta['numero_conta']}")
-            print(f"Saldo atual: R${conta['saldo']}")
-            return
+
+    if verificar_senha(numero_conta):
+         for conta in contas_bancarias:
+            if conta["numero_conta"] == numero_conta:
+                print(f"Extrato bancário para a conta de {conta['nome']}:")
+                print(f"Número da conta: {conta['numero_conta']}")
+                print(f"Saldo atual: R${conta['saldo']}")
+                return 
     print("Conta não encontrada.")
 
+    
+   
 while True:
     print("\nMenu:")
     print("1 - Criar Conta")
