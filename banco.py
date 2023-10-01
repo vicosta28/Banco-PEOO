@@ -41,6 +41,13 @@ def verificar_senha(numero_conta):
                 break
         else:
             print("Conta não encontrada")
+            if conta["numero_conta"] == numero_conta:
+                if conta["senha"] != senha:
+                    print('Senha inválida.\n Tente novamente.')
+                    senha = input("Digite sua senha de 3 digitos: ")
+            
+    print("Conta não encontrada")
+
 
 def sacar():
     numero_conta = input("Digite o número da conta: ")
