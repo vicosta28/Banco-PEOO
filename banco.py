@@ -42,6 +42,7 @@ def verificar_senha(numero_conta):
             
     print("Conta não encontrada")
 
+    return False
 
 def sacar():
     numero_conta = input("Digite o número da conta: ")
