@@ -1,3 +1,5 @@
+print("BEM VINDO(A) AO BANCO DAHORA!\n")
+
 contas_bancarias = []
 
 def criar_conta():
@@ -8,7 +10,7 @@ def criar_conta():
     for conta in contas_bancarias:
         if (conta["numero_conta"] == numero_conta):
             print("Essa conta já existe. Por favor escolha um numero de conta diferente.")
-            numero_conta = input("Digite o número da conta: ")
+            return
 
     saldo_inicial = float(input("Digite o saldo inicial da conta: "))
     senha = input("Crie uma senha de 3 digitos: ")
@@ -28,26 +30,14 @@ def criar_conta():
     print("Conta criada com sucesso!")
 
 def verificar_senha(numero_conta):
-    while True:
         senha = input("Digite sua senha de 3 digitos: ")
 
         for conta in contas_bancarias:
-            if conta["numero_conta"] == numero_conta:
-                if conta["senha"] == senha:
+            if conta["numero_conta"] == numero_conta and  conta["senha"] == senha:
                     return True
             
-            else:
-                print("Senha incorreta. Tente novamente.")
-                break
-        else:
-            print("Conta não encontrada")
-            if conta["numero_conta"] == numero_conta:
-                if conta["senha"] != senha:
-                    print('Senha inválida.\n Tente novamente.')
-                    senha = input("Digite sua senha de 3 digitos: ")
-            
-    print("Conta não encontrada")
-
+        print("Senha incorreta. Tente novamente.")
+        return False
 
 def sacar():
     numero_conta = input("Digite o número da conta: ")
