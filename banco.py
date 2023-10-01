@@ -1,56 +1,105 @@
-print("Bem vindo(a) ao Banco DAHORA\n")
+contas_bancarias = []
 
-conta = input("Você já tem uma conta(sim/não)? ")
-lista = []
-
-if(conta=="não"):
-    criar_conta = input("Digite seu nome: ")
-    n_conta = input("Digite o numero da conta: ")
-    saldo = float(input("Digite quanto quer depositar: "))
-    lista.append(criar_conta)
-    lista.append(n_conta)
-    lista.append(saldo)
-    print(lista)
+def criar_conta():
+    nome = input("Digite o nome do titular da conta: ")
+    numero_conta = input("Digite o número da conta: ")
 
 
-if(conta=="sim"):
-    cont = input("Qual o numero da sua conta? ")
-    menu = int(input("(1)Sacar\n(2)Depositar\n(3)Transferir\n(4)Extrato\n(5)Sair\nO que deseja acessar: "))
+    for conta in contas_bancarias:
+        if (conta["numero_conta"] == numero_conta):
+            print("Essa conta já existe. Por favor escolha um numero de conta diferente.")
+            num_conta = input("Digite o número da conta: ")
 
-    if(menu==1):
-        def sacar():
-            saque = int(input("QUanto deseja sacar: "))
-            if(saldo<saque):
-                print("Saldo insuficiente")
+    saldo_inicial = float(input("Digite o saldo inicial da conta: "))
+    conta = {
+        "nome": nome,
+        "numero_conta": numero_conta,
+        "saldo": saldo_inicial
+    }
 
-            if(saldo>saque):
-                saldo=-saque
-                print("Retirada com sucesso!")
+    contas_bancarias.append(conta)
+    senha = int(input("Crie uma senha de 3 digitos: "))
+    print("Conta criada com sucesso!")
 
-            
-    elif(menu==2):
-        def depositar():
-            deposito = int(input("Digite seu deposito: "))
-            saldo=+deposito
-            print("Deposito realizado com sucesso!")
+def sacar():
+    numero_conta = input("Digite o número da conta: ")
+    digite_senha = int(input("Digite sua senha:"))
+    valor = float(input("Digite o valor que deseja sacar: "))
+    
+    for conta in contas_bancarias:
+        if conta["numero_conta"] == numero_conta:
+            if conta["saldo"] >= valor:
+                conta["saldo"] -= valor
+                print(f"Saque de R${valor} realizado com sucesso.")
+                return
+            else:
+                print("Saldo insuficiente para realizar o saque.")
+                return
+    print("Conta não encontrada.")
 
-    if(menu==3):
-        def transferir():
-            tranferencia = input("Informe o numero da conta que deseja transferir: ")
-            print("Seu saldo é",saldo)
-            valor = int(input("Quanto deseja transferir: "))
+def depositar():
+    numero_conta = input("Digite o número da conta: ")
+    valor = float(input("Digite o valor que deseja depositar: "))
+    
+    for conta in contas_bancarias:
+        if conta["numero_conta"] == numero_conta:
+            conta["saldo"] += valor
+            print(f"Depósito de R${valor} realizado com sucesso.")
+            return
+    print("Conta não encontrada.")
 
-            if(valor>saldo):
-                print("Saldo insuficiente")
-            
-            if(valor<saldo):
-                print("Transferencia realizada com sucesso!")
+def transferir():
+    conta_origem = input("Digite o número da conta de origem: ")
+    conta_destino = input("Digite o número da conta de destino: ")
+    valor = float(input("Digite o valor que deseja transferir: "))
+    
+    for origem in contas_bancarias:
+        if origem["numero_conta"] == conta_origem:
+            for destino in contas_bancarias:
+                if destino["numero_conta"] == conta_destino:
+                    if origem["saldo"] >= valor:
+                        origem["saldo"] -= valor
+                        destino["saldo"] += valor
+                        print(f"Transferência de R${valor} realizada com sucesso.")
+                        return
+                    else:
+                        print("Saldo insuficiente para realizar a transferência.")
+                        return
+    print("Conta de origem ou conta de destino não encontrada.")
 
-    elif(menu==4):
-        def extrato():
-            print("Saldo atual: ",saldo)
+def extrato_bancario():
+    numero_conta = input("Digite o número da conta: ")
+    
+    for conta in contas_bancarias:
+        if conta["numero_conta"] == numero_conta:
+            print(f"Extrato bancário para a conta de {conta['nome']}:")
+            print(f"Número da conta: {conta['numero_conta']}")
+            print(f"Saldo atual: R${conta['saldo']}")
+            return
+    print("Conta não encontrada.")
 
-            return menu
-
-    if(menu==5):
-        s = input("Tem certerza que deseja sair(sim/não): ")
+while True:
+    print("\nMenu:")
+    print("1 - Criar Conta")
+    print("2 - Sacar")
+    print("3 - Depositar")
+    print("4 - Transferir")
+    print("5 - Ver Extrato Bancário")
+    print("6 - Sair")
+    
+    opcao = input("Escolha uma opção: ")
+    
+    if opcao == '1':
+        criar_conta()
+    elif opcao == '2':
+        sacar()
+    elif opcao == '3':
+        depositar()
+    elif opcao == '4':
+        transferir()
+    elif opcao == '5':
+        extrato_bancario()
+    elif opcao == '6':
+        break
+    else:
+        print("Opção inválida. Tente novamente.")
