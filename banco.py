@@ -28,14 +28,20 @@ def criar_conta():
     print("Conta criada com sucesso!")
 
 def verificar_senha(numero_conta):
-    senha = input("Digite sua senha de 3 digitos: ")
+    while True:
+        senha = input("Digite sua senha de 3 digitos: ")
 
-    for conta in contas_bancarias:
-        if conta["numero_conta"] == numero_conta:
-            if conta["senha"] == senha:
-                return True
+        for conta in contas_bancarias:
+            if conta["numero_conta"] == numero_conta:
+                if conta["senha"] == senha:
+                    return True
             
-            elif conta["numero_conta"] == numero_conta:
+            else:
+                print("Senha incorreta. Tente novamente.")
+                break
+        else:
+            print("Conta não encontrada")
+            if conta["numero_conta"] == numero_conta:
                 if conta["senha"] != senha:
                     print('Senha inválida.\n Tente novamente.')
                     senha = input("Digite sua senha de 3 digitos: ")
