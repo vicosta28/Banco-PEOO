@@ -76,7 +76,7 @@ def transferir():
     conta_destino = input("Digite o número da conta de destino: ")
 
     if not verificar_senha(conta_origem):
-        print("senha da conta de origem incorreta. Opração de transferencia recusada")
+        print("senha da conta de origem incorreta. Operação de transferencia recusada.")
         return
     
     valor = float(input("Digite o valor que deseja transferir: "))
@@ -134,8 +134,7 @@ while True:
     elif opcao == '5':
         extrato_bancario()
     elif opcao == '6':
+        print("Saindo do menu.\nVolte sempre ao banco DAHORA!")
         break
     else:
         print("Opção inválida. Tente novamente.")
-
-print(contas_bancarias)
