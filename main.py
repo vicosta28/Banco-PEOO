@@ -1,2 +1,0 @@
-from banco import (banco)
-
